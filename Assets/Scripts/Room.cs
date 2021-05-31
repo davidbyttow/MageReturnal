@@ -48,11 +48,23 @@ public class Room : MonoBehaviour {
 		}
 	}
 
+	Entity[] GetEntitiesInRoom() {
+		return GetComponentsInChildren<Entity>(true);
+	}
+
 	public void ConnectRooms(RoomSide side, Room other) {
 		var srcDoor = GetDoor(side);
 		var dstDoor = other.GetDoor(RoomSides.Opposite(side));
 		srcDoor.gameObject.SetActive(true);
 		dstDoor.gameObject.SetActive(true);
+	}
+
+	public void ActivateRoom() {
+		gameObject.SetActive(true);
+	}
+
+	public void DeactivateRoom() {
+		gameObject.SetActive(false);
 	}
 
 	public void ExitDoor(RoomSide side) {
@@ -69,6 +81,12 @@ public class Room : MonoBehaviour {
 			0
 		);
 		player.transform.position = door.transform.position + offset;
+		AddToRoom(player.character);
+	}
+
+	public void AddToRoom(Entity entity) {
+		entity.currentRoom = this;
+		entity.transform.SetParent(transform, true);
 	}
 
 	Door FindDoor(RoomSide side) {

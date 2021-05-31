@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour {
+public class Projectile : Entity {
 
 	private Rigidbody2D rigidBody;
+
+	internal Vector2 velocity;
 
 	void Awake() {
 		rigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	public void SetVelocity(Vector2 velocity) {
-		rigidBody.AddForce(velocity);
-	}
-
-	void Update() {
-		
+	void FixedUpdate() {
+		rigidBody.velocity = velocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D target) {

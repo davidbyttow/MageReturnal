@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSize: 6
   roomPadding: 2
+  enemyPrefabs:
+  - {fileID: 5780047683817350153, guid: 82bae769abeeab34bac0e2f6ec13330b, type: 3}
   roomPrefab: {fileID: 4969612191609012215, guid: c4adcf175d7eecf49bea74d8d07a916b, type: 3}
 --- !u!4 &20375085
 Transform:
