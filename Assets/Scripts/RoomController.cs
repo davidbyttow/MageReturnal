@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 public class RoomController : MonoBehaviour {
@@ -10,6 +9,7 @@ public class RoomController : MonoBehaviour {
 
 	public Enemy[] enemyPrefabs;
 	public Room roomPrefab;
+	public Room bossRoomPrefab;
 	private Room startRoom;
 
 	private Dictionary<Vector2Int, Room> rooms = new Dictionary<Vector2Int, Room>();
@@ -19,14 +19,21 @@ public class RoomController : MonoBehaviour {
 
 	void Start() {
 		Room startRoom = null;
-		var cells = PCG.Generate(32, gridSize, gridSize);
+		var cells = PCG.Generate(DateTime.UtcNow.Millisecond, gridSize, gridSize);
 		for (var y = gridSize - 1; y >= 0; --y) {
 			for (var x = 0; x < gridSize; ++x) {
 				var cell = cells[x, y];
 				if (cell == '#') {
 					continue;
 				}
-				var room = CreateRoom(new Vector2Int(x, y));
+
+				Room room;
+				if (cell == 'B') {
+					room = CreateRoom(new Vector2Int(x, y), bossRoomPrefab);
+				} else {
+					room = CreateRoom(new Vector2Int(x, y), roomPrefab);
+				}
+
 				if (cell == 'S') {
 					startRoom = room;
 				}
@@ -77,7 +84,7 @@ public class RoomController : MonoBehaviour {
 		}
 	}
 
-	Room CreateRoom(Vector2Int pos) {
+	Room CreateRoom(Vector2Int pos, Room roomPrefab) {
 		var room = Instantiate(roomPrefab);
 		room.controller = this;
 		room.pos = pos;
