@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 public enum RoomSide {
 	Top,
 	Right,
@@ -37,6 +36,7 @@ public class Room : MonoBehaviour {
 	public int width;
 	public int height;
 	public Door[] doors;
+	public GameObject entityRoot;
 
 	internal Vector2Int pos;
 	internal RoomController controller;
@@ -49,7 +49,7 @@ public class Room : MonoBehaviour {
 	}
 
 	Entity[] GetEntitiesInRoom() {
-		return GetComponentsInChildren<Entity>(true);
+		return entityRoot.GetComponentsInChildren<Entity>(true);
 	}
 
 	public void ConnectRooms(RoomSide side, Room other) {
@@ -60,11 +60,11 @@ public class Room : MonoBehaviour {
 	}
 
 	public void ActivateRoom() {
-		gameObject.SetActive(true);
+		entityRoot.SetActive(true);
 	}
 
 	public void DeactivateRoom() {
-		gameObject.SetActive(false);
+		entityRoot.SetActive(false);
 	}
 
 	public void ExitDoor(RoomSide side) {
@@ -86,7 +86,7 @@ public class Room : MonoBehaviour {
 
 	public void AddToRoom(Entity entity) {
 		entity.currentRoom = this;
-		entity.transform.SetParent(transform, true);
+		entity.transform.SetParent(entityRoot.transform, true);
 	}
 
 	Door FindDoor(RoomSide side) {

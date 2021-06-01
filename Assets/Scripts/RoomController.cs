@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class RoomController : MonoBehaviour {
 
-	public int gridSize = 6;
+	public int gridSize = 9;
 	public float roomPadding = 2;
 
 	public Enemy[] enemyPrefabs;
@@ -18,22 +18,40 @@ public class RoomController : MonoBehaviour {
 	}
 
 	void Start() {
-		int x = gridSize / 2;
-		int y = gridSize / 2;
-		Debug.Log($"Start room at {x},{y}");
-		startRoom = CreateRoom(new Vector2Int(x, y));
-		startRoom.AddToRoom(Player.inst.character);
-		RoomCamera.inst.currentRoom = startRoom;
+		Room startRoom = null;
+		var cells = PCG.Generate(32, gridSize, gridSize);
+		for (var y = gridSize - 1; y >= 0; --y) {
+			for (var x = 0; x < gridSize; ++x) {
+				var cell = cells[x, y];
+				if (cell == '#') {
+					continue;
+				}
+				var room = CreateRoom(new Vector2Int(x, y));
+				if (cell == 'S') {
+					startRoom = room;
+				}
 
-		CreateRoom(new Vector2Int(x + 1, y));
-		CreateRoom(new Vector2Int(x + 2, y));
-		CreateRoom(new Vector2Int(x, y + 1));
-		ConnectRooms();
-
-		if (enemyPrefabs.Length > 0) {
-			SpawnEnemy(enemyPrefabs[0], startRoom);
+				var offset = new Vector3(
+					x * roomPrefab.width + roomPadding * (x - 1),
+					y * roomPrefab.height + roomPadding * (y - 1),
+					0
+				);
+				room.transform.position = offset;
+			}
 		}
 
+		//CreateRoom(new Vector2Int(x + 1, y));
+		//CreateRoom(new Vector2Int(x + 2, y));
+		//CreateRoom(new Vector2Int(x, y + 1));
+		ConnectRooms();
+
+		//if (enemyPrefabs.Length > 0) {
+		//	SpawnEnemy(enemyPrefabs[0], startRoom);
+		//}
+
+		Player.inst.transform.position = startRoom.transform.position;
+		startRoom.AddToRoom(Player.inst.character);
+		RoomCamera.inst.currentRoom = startRoom;
 		startRoom.ActivateRoom();
 	}
 
@@ -55,12 +73,6 @@ public class RoomController : MonoBehaviour {
 		var otherPos = room.pos + dir;
 		var other = FindRoom(otherPos);
 		if (other) {
-			var offset = new Vector3(
-				dir.x * (room.width * 0.5f + other.width * 0.5f + roomPadding),
-				dir.y * (room.height * 0.5f + other.height * 0.5f + roomPadding),
-				0
-			);
-			other.transform.position = room.transform.position + offset;
 			room.ConnectRooms(side, other);
 		}
 	}
