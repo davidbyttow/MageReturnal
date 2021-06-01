@@ -8,6 +8,7 @@ public class RoomController : MonoBehaviour {
 	public float roomPadding = 2;
 
 	public Enemy[] enemyPrefabs;
+	public Pickup[] pickupPrefabs;
 	public Room roomPrefab;
 	public Room bossRoomPrefab;
 	private Room startRoom;
@@ -52,13 +53,18 @@ public class RoomController : MonoBehaviour {
 		//CreateRoom(new Vector2Int(x, y + 1));
 		ConnectRooms();
 
+		Player.inst.transform.position = startRoom.transform.position;
+		startRoom.AddToRoom(Player.inst.character);
+		RoomCamera.inst.currentRoom = startRoom;
+
 		//if (enemyPrefabs.Length > 0) {
 		//	SpawnEnemy(enemyPrefabs[0], startRoom);
 		//}
 
-		Player.inst.transform.position = startRoom.transform.position;
-		startRoom.AddToRoom(Player.inst.character);
-		RoomCamera.inst.currentRoom = startRoom;
+		if (pickupPrefabs.Length > 0) {
+			SpawnPickup(pickupPrefabs[0], startRoom);
+		}
+
 		startRoom.ActivateRoom();
 	}
 
@@ -110,9 +116,15 @@ public class RoomController : MonoBehaviour {
 		RoomCamera.inst.currentRoom = room;
 	}
 
-	public void SpawnEnemy(Enemy enemy, Room room) {
-		enemy = Instantiate(enemy);
+	public void SpawnEnemy(Enemy enemyPrefab, Room room) {
+		var enemy = Instantiate(enemyPrefab);
 		enemy.transform.position = room.transform.position + new Vector3(3, 3, 0);
 		room.AddToRoom(enemy.character);
+	}
+
+	public void SpawnPickup(Pickup pickupPrefab, Room room) {
+		var pickup = Instantiate(pickupPrefab);
+		pickup.transform.position = room.transform.position + new Vector3(-3, 3, 0);
+		room.AddToRoom(pickup);
 	}
 }
