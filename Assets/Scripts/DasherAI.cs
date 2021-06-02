@@ -25,7 +25,6 @@ public class DasherAI : MonoBehaviour {
 		if (dashTimer > 0) {
 			dashTimer -= Time.deltaTime;
 			if (dashTimer <= 0) {
-				Debug.Log($"changing state from {dashing}");
 				if (dashing) {
 					character.velocity = Vector2.zero;
 					dashTimer = waitTime;
@@ -39,7 +38,6 @@ public class DasherAI : MonoBehaviour {
 					dashTimer = dist / speed;
 					character.velocity = dir * speed;
 					dashing = true;
-					Debug.Log($"moving {dist} {dashTimer} {character.velocity}");
 				}
 			}
 		}

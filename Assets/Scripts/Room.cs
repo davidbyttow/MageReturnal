@@ -7,6 +7,12 @@ public enum RoomSide {
 	Left,
 }
 
+public enum RoomType {
+	Normal,
+	Start,
+	Boss,
+}
+
 public static class RoomSides {
 	public static RoomSide Opposite(RoomSide side) {
 		switch (side) {
@@ -37,6 +43,7 @@ public class Room : MonoBehaviour {
 	public int height;
 	public Door[] doors;
 	public GameObject entityRoot;
+	public RoomType type = RoomType.Normal;
 
 	internal Vector2Int pos;
 	internal RoomController controller;
@@ -60,7 +67,7 @@ public class Room : MonoBehaviour {
 	}
 
 	public void ActivateRoom() {
-		entityRoot.SetActive(true);
+		entityRoot.SetActiveRecursively(true);
 	}
 
 	public void DeactivateRoom() {
@@ -106,6 +113,13 @@ public class Room : MonoBehaviour {
 		return door;
 	}
 
+	public void ApplyConfiguration(RoomTemplate template) {
+		var enemies = template.GetComponentsInChildren<Enemy>(true);
+		foreach (var enemy in enemies) {
+			SpawnEnemy(enemy);
+		}
+	}
+
 	private void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube(transform.position, new Vector3(width, height, 0));
@@ -115,5 +129,11 @@ public class Room : MonoBehaviour {
 		get {
 			return transform.position;
 		}
+	}
+
+	public void SpawnEnemy(Enemy enemyPrefab) {
+		var enemy = Instantiate(enemyPrefab, enemyPrefab.transform.position, enemyPrefab.transform.rotation);
+		enemy.gameObject.SetActive(false);
+		AddToRoom(enemy.character);
 	}
 }

@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f6e5a875967b5439a74b4f70a4e435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 20
 --- !u!58 &5780047683817350167
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -140,6 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270957d0a56612f42bfe854645975d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitTime: 1.5
+  speed: 4
+  maxTravelDistance: 5
 --- !u!50 &5780047683817350155
 Rigidbody2D:
   serializedVersion: 4

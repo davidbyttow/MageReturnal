@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public class RoomController : MonoBehaviour {
@@ -31,12 +32,14 @@ public class RoomController : MonoBehaviour {
 				Room room;
 				if (cell == 'B') {
 					room = CreateRoom(new Vector2Int(x, y), bossRoomPrefab);
+					room.type = RoomType.Boss;
 				} else {
 					room = CreateRoom(new Vector2Int(x, y), roomPrefab);
 				}
 
 				if (cell == 'S') {
 					startRoom = room;
+					startRoom.type = RoomType.Start;
 				}
 
 				var offset = new Vector3(
@@ -52,6 +55,7 @@ public class RoomController : MonoBehaviour {
 		//CreateRoom(new Vector2Int(x + 2, y));
 		//CreateRoom(new Vector2Int(x, y + 1));
 		ConnectRooms();
+		ConfigureRooms();
 
 		Player.inst.transform.position = startRoom.transform.position;
 		startRoom.AddToRoom(Player.inst.character);
@@ -61,9 +65,9 @@ public class RoomController : MonoBehaviour {
 		//	SpawnEnemy(enemyPrefabs[0], startRoom);
 		//}
 
-		if (pickupPrefabs.Length > 0) {
-			SpawnPickup(pickupPrefabs[0], startRoom);
-		}
+		//if (pickupPrefabs.Length > 0) {
+		//	SpawnPickup(pickupPrefabs[0], startRoom);
+		//}
 
 		startRoom.ActivateRoom();
 	}
@@ -77,6 +81,19 @@ public class RoomController : MonoBehaviour {
 			var room = r.Value;
 			foreach (var side in Enum.GetValues(typeof(RoomSide))) {
 				ConnectRoomIfPresent(room, (RoomSide)side);
+			}
+		}
+	}
+
+	void ConfigureRooms() {
+		foreach (var r in rooms) {
+			var room = r.Value;
+			if (room.type == RoomType.Normal) {
+				var templates = room.GetComponentsInChildren<RoomTemplate>(true).ToArray();
+				if (templates.Length > 0) {
+					Debug.Log("Applying configuration");
+					room.ApplyConfiguration(templates[0]);
+				}
 			}
 		}
 	}
