@@ -53,6 +53,10 @@ public class Room : MonoBehaviour {
 			door.room = this;
 			door.gameObject.SetActive(false);
 		}
+		var templates = GetComponentsInChildren<RoomTemplate>(true);
+		foreach (var tpl in templates) {
+			tpl.gameObject.SetActive(false);
+		}
 	}
 
 	Entity[] GetEntitiesInRoom() {
@@ -118,6 +122,10 @@ public class Room : MonoBehaviour {
 		foreach (var enemy in enemies) {
 			SpawnEnemy(enemy);
 		}
+		var obstacles = template.GetComponentsInChildren<Obstacle>(true);
+		foreach (var obstacle in obstacles) {
+			SpawnEntity(obstacle);
+		}
 	}
 
 	private void OnDrawGizmos() {
@@ -129,6 +137,12 @@ public class Room : MonoBehaviour {
 		get {
 			return transform.position;
 		}
+	}
+
+	public void SpawnEntity(Entity prefab) {
+		var entity = Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+		entity.gameObject.SetActive(false);
+		AddToRoom(entity);
 	}
 
 	public void SpawnEnemy(Enemy enemyPrefab) {

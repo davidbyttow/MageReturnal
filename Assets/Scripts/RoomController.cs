@@ -59,7 +59,7 @@ public class RoomController : MonoBehaviour {
 
 		Player.inst.transform.position = startRoom.transform.position;
 		startRoom.AddToRoom(Player.inst.character);
-		RoomCamera.inst.currentRoom = startRoom;
+		RoomCamera.inst.UpdateRoom(startRoom);
 
 		//if (enemyPrefabs.Length > 0) {
 		//	SpawnEnemy(enemyPrefabs[0], startRoom);
@@ -130,7 +130,7 @@ public class RoomController : MonoBehaviour {
 		room.EnterRoom(Player.inst, otherSide);
 		from.DeactivateRoom();
 		room.ActivateRoom();
-		RoomCamera.inst.currentRoom = room;
+		RoomCamera.inst.UpdateRoom(room);
 	}
 
 	public void SpawnEnemy(Enemy enemyPrefab, Room room) {

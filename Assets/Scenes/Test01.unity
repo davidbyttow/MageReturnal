@@ -407,7 +407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc2f8688d17a47448dda3047bf2230e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoom: {fileID: 0}
   roomChangeSpeed: 100
 --- !u!1 &717721874
 GameObject:
@@ -572,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 752831810668838106, guid: 87f30db1b0e4d0a408bae4a6421eedd7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 752831810668838111, guid: 87f30db1b0e4d0a408bae4a6421eedd7, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87f30db1b0e4d0a408bae4a6421eedd7, type: 3}
