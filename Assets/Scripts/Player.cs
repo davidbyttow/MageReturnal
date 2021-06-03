@@ -11,12 +11,14 @@ public class Player : MonoBehaviour {
 
 	public Character character { get; private set; }
 	private Rigidbody2D rigidBody;
+	private Animator animator;
 	private Vector2 moveInput = Vector2.zero;
 
 	void Awake() {
 		inst = this;
 		character = GetComponent<Character>();
 		rigidBody = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 
 	void Update() {
@@ -24,6 +26,12 @@ public class Player : MonoBehaviour {
 		var moveY = Input.GetAxisRaw("Vertical");
 		moveInput = new Vector2(moveX, moveY);
 		character.velocity = new Vector2(moveInput.x * maxSpeed, moveInput.y * maxSpeed);
+
+		if (moveX != 0 || moveY != 0) {
+			animator.Play("RedMage_Walk_F");
+		} else {
+			animator.Play("RedMage_Idle_F");
+		}
 
 		if (Input.GetButtonDown("Fire1")) {
 			character.FireProjectile(projectilePrefab, aimDirection);
