@@ -12,31 +12,8 @@ public class Player : MonoBehaviour {
 	public Character character { get; private set; }
 	private Rigidbody2D rigidBody;
 	private Animator animator;
-	private Vector2 moveInput = Vector2.zero;
-
-	void Awake() {
-		inst = this;
-		character = GetComponent<Character>();
-		rigidBody = GetComponent<Rigidbody2D>();
-		animator = GetComponent<Animator>();
-	}
-
-	void Update() {
-		var moveX = Input.GetAxisRaw("Horizontal");
-		var moveY = Input.GetAxisRaw("Vertical");
-		moveInput = new Vector2(moveX, moveY);
-		character.velocity = new Vector2(moveInput.x * maxSpeed, moveInput.y * maxSpeed);
-
-		if (moveX != 0 || moveY != 0) {
-			animator.Play("RedMage_Walk_F");
-		} else {
-			animator.Play("RedMage_Idle_F");
-		}
-
-		if (Input.GetButtonDown("Fire1")) {
-			character.FireProjectile(projectilePrefab, aimDirection);
-		}
-	}
+	private Vector2 movementDirection = Vector2.zero;
+	private float movementSpeed = 0;
 
 	private Vector2 aimDirection {
 		get {
@@ -46,5 +23,40 @@ public class Player : MonoBehaviour {
 			var dir2d = new Vector2(dir.x, dir.y);
 			return dir2d;
 		}
+	}
+
+	void Awake() {
+		inst = this;
+		character = GetComponent<Character>();
+		rigidBody = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
+	}
+
+	void Update() {
+		ProcessInput();
+		UpdateMovement();
+		Animate();
+	}
+
+	void ProcessInput() {
+		var moveX = Input.GetAxisRaw("Horizontal");
+		var moveY = Input.GetAxisRaw("Vertical");
+		movementDirection = new Vector2(moveX, moveY);
+		movementSpeed = Mathf.Clamp(movementDirection.magnitude, 0f, 1f);
+		movementDirection.Normalize();
+
+		if (Input.GetButtonDown("Fire1")) {
+			character.FireProjectile(projectilePrefab, aimDirection);
+		}
+	}
+
+	void UpdateMovement() {
+		character.velocity = movementDirection * movementSpeed * maxSpeed;
+	}
+
+	void Animate() {
+		animator.SetFloat("Horizontal", movementDirection.x);
+		animator.SetFloat("Vertical", movementDirection.y);
+		animator.SetFloat("Speed", character.velocity.sqrMagnitude);
 	}
 }
