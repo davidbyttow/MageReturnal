@@ -13,6 +13,8 @@ public class Player : MonoBehaviour {
 	private Rigidbody2D rigidBody;
 	private Animator animator;
 	private Vector2 movementDirection = Vector2.zero;
+	private Vector2 fireDirection = Vector2.zero;
+	private float lastFireTime;
 	private float movementSpeed = 0;
 
 	private Vector2 aimDirection {
@@ -46,7 +48,14 @@ public class Player : MonoBehaviour {
 		movementDirection.Normalize();
 
 		if (Input.GetButtonDown("Fire1")) {
+			fireDirection = aimDirection;
+			lastFireTime = Time.realtimeSinceStartup;
 			character.FireProjectile(projectilePrefab, aimDirection);
+		}
+
+		if (Time.realtimeSinceStartup - lastFireTime > 1f) {
+			lastFireTime = 0;
+			fireDirection = Vector2.zero;
 		}
 	}
 
@@ -55,8 +64,13 @@ public class Player : MonoBehaviour {
 	}
 
 	void Animate() {
-		animator.SetFloat("Horizontal", movementDirection.x);
-		animator.SetFloat("Vertical", movementDirection.y);
+		if (fireDirection.sqrMagnitude > 0) {
+			animator.SetFloat("Horizontal", fireDirection.x);
+			animator.SetFloat("Vertical", fireDirection.y);
+		} else {
+			animator.SetFloat("Horizontal", movementDirection.x);
+			animator.SetFloat("Vertical", movementDirection.y);
+		}
 		animator.SetFloat("Speed", character.velocity.sqrMagnitude);
 	}
 }
