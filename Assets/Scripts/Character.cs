@@ -34,7 +34,7 @@ public class Character : Entity {
 		}
 	}
 
-	public void OnProjectileHit(Projectile proj, Collision2D collision) {
-		TakeDamage(proj.damage);
+	public override void OnProjectileHit(ProjectileHit hit) {
+		TakeDamage(hit.projectile.damage);
 	}
 }

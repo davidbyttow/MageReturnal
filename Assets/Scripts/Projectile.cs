@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public struct ProjectileHit {
+	public Projectile projectile;
+	public Collision2D collision;
+	public bool ignoreCollision;
+}
+
 public class Projectile : Entity {
 
 	public int damage = 10;
@@ -20,11 +26,17 @@ public class Projectile : Entity {
 	private void OnCollisionEnter2D(Collision2D target) {
 		Debug.Log("collision enter");
 
-		var character = target.gameObject.GetComponent<Character>();
-		if (character) {
-			Debug.Log("hit character");
-			character.OnProjectileHit(this, target);
+		var hit = new ProjectileHit();
+		hit.projectile = this;
+		hit.collision = target;
+
+		var entity = target.collider.GetComponent<Entity>();
+		if (entity) {
+			entity.OnProjectileHit(hit);
 		}
-		Destroy(gameObject);
+
+		if (!hit.ignoreCollision) {
+			Destroy(gameObject);
+		}
 	}
 }

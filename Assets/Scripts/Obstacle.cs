@@ -10,4 +10,8 @@ public class Obstacle : Entity {
 	void Update() {
 
 	}
+
+	public override void OnProjectileHit(ProjectileHit hit) {
+		hit.ignoreCollision = true;
+	}
 }
