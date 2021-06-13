@@ -11,16 +11,16 @@ public class Projectile : Entity {
 
 	public int damage = 10;
 
-	private Rigidbody2D rigidBody;
+	internal Rigidbody2D rigidBody;
 
-	internal Vector2 velocity;
+	private SpriteRenderer renderer;
 
 	void Awake() {
 		rigidBody = GetComponent<Rigidbody2D>();
+		renderer = GetComponent<SpriteRenderer>();
 	}
 
 	void Update() {
-		rigidBody.velocity = velocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D target) {
@@ -38,7 +38,41 @@ public class Projectile : Entity {
 		}
 
 		if (!hit.ignoreCollision) {
-			Destroy(gameObject);
+			StartCoroutine(StopProjectile());
 		}
+	}
+
+	IEnumerator StopProjectile() {
+		GetComponent<Collider2D>().isTrigger = true;
+		rigidBody.velocity = Vector2.zero;
+		rigidBody.isKinematic = true;
+		renderer.forceRenderingOff = true;
+
+		var systems = GetComponentsInChildren<ParticleSystem>();
+		foreach (var ps in systems) {
+			ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+		}
+
+		var trails = GetComponentsInChildren<TrailRenderer>();
+		foreach (var trail in trails) {
+			trail.emitting = false;
+			trail.time = 0.2f;
+		}
+
+		var done = false;
+		while (!done) {
+			var hasParticles = false;
+			foreach (var ps in systems) {
+				if (ps.particleCount > 0) {
+					hasParticles = true;
+					break;
+				}
+			}
+			done = !hasParticles;
+			yield return null;
+		}
+
+		Destroy(gameObject);
+		yield return null;
 	}
 }

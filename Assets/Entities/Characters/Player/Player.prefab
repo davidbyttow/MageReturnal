@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 100
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -121,7 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abfaf65c1a950e478a47931d5a1b574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 20
   projectilePrefab: {fileID: 5476209235497651632, guid: d2c46c0a695b340418ec65b8af137c4a, type: 3}
 --- !u!70 &752831810668838111
 CapsuleCollider2D:

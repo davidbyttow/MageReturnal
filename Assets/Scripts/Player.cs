@@ -66,11 +66,9 @@ public class Player : MonoBehaviour {
 
 	void UpdateMovement() {
 		var vars = Environment.inst.variables;
-		rigidBody.AddForce(movementDirection * vars.playerAcceleration);
-
-		if (rigidBody.velocity.magnitude > vars.playerMaxSpeed) {
-			rigidBody.velocity = rigidBody.velocity.normalized * vars.playerMaxSpeed;
-		}
+		var targetVelocity = movementDirection * vars.playerSpeed;
+		var diff = rigidBody.velocity.Delta(targetVelocity, vars.playerSpeed);
+		rigidBody.velocity += diff;
 	}
 
 	void Animate() {

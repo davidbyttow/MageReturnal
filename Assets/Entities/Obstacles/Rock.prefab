@@ -143,7 +143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3151394713605097146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41154db139e592478a445119f3d4da8, type: 3}
+  m_Script: {fileID: 11500000, guid: 70c1eb31a800d144ba50593dcd3cd963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6915131117067926768
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShadowGroup: 0
-  m_HasRenderer: 0
+  m_HasRenderer: 1
   m_UseRendererSilhouette: 1
   m_CastsShadows: 1
   m_SelfShadows: 0
@@ -171,4 +171,4 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1900572
+  m_InstanceId: 24236

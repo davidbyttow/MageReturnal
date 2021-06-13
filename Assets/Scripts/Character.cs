@@ -14,24 +14,19 @@ public class Character : Entity {
 	}
 
 	void Update() {
-
-		//rigidBody.AddForce(velocity, ForceMode2D.Impulse);
-//		rigidBody.velocity = velocity;
 	}
 
 	void FixedUpdate() {
-		//rigidBody.MovePosition(rigidBody.position + velocity * Time.fixedDeltaTime);
 		
 	}
 
 	private void LateUpdate() {
-//		velocity = rigidBody.velocity;
 	}
 
 	public void FireProjectile(Projectile projectile, Vector2 dir) {
-		Projectile proj = Instantiate(projectile, transform);
+		Projectile proj = Instantiate(projectile, transform.position, Quaternion.identity);
 		Physics2D.IgnoreCollision(GetComponent<Collider2D>(), proj.GetComponent<Collider2D>());
-		proj.velocity = dir * 10;
+		proj.rigidBody.velocity = dir * 10;
 		if (currentRoom) {
 			currentRoom.AddToRoom(proj);
 		}

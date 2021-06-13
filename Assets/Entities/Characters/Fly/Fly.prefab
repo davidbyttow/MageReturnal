@@ -143,7 +143,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 100
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -179,5 +179,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f428db84d74c79244bf9cf1ec0b2a7de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTarget: {x: 0, y: 0}
-  stateElapsed: 0
+  idleDuration: 1.5
+  speed: 10

@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988568c87e8ec1d499c1292b7fb8cb7f, type: 3}
   m_Name: EnvironmentVariables
   m_EditorClassIdentifier: 
-  playerAcceleration: 200
-  playerMaxSpeed: 5
+  playerSpeed: 6
