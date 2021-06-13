@@ -6,7 +6,6 @@ public class Player : MonoBehaviour {
 
 	public static Player inst;
 
-	public float maxSpeed = 20;
 	public Projectile projectilePrefab;
 
 	public Character character { get; private set; }
@@ -36,7 +35,13 @@ public class Player : MonoBehaviour {
 
 	void Update() {
 		ProcessInput();
-		UpdateMovement();
+	}
+
+	void FixedUpdate() {
+		UpdateMovement();	
+	}
+
+	void LateUpdate() {
 		Animate();
 	}
 
@@ -60,17 +65,22 @@ public class Player : MonoBehaviour {
 	}
 
 	void UpdateMovement() {
-		character.velocity = movementDirection * movementSpeed * maxSpeed;
+		var vars = Environment.inst.variables;
+		rigidBody.AddForce(movementDirection * vars.playerAcceleration);
+
+		if (rigidBody.velocity.magnitude > vars.playerMaxSpeed) {
+			rigidBody.velocity = rigidBody.velocity.normalized * vars.playerMaxSpeed;
+		}
 	}
 
 	void Animate() {
 		if (fireDirection.sqrMagnitude > 0) {
 			animator.SetFloat("Horizontal", fireDirection.x);
 			animator.SetFloat("Vertical", fireDirection.y);
-		} else {
+		} else if (movementDirection.sqrMagnitude > 0) {
 			animator.SetFloat("Horizontal", movementDirection.x);
 			animator.SetFloat("Vertical", movementDirection.y);
 		}
-		animator.SetFloat("Speed", character.velocity.sqrMagnitude);
+		animator.SetFloat("Speed", character.rigidBody.velocity.sqrMagnitude);
 	}
 }

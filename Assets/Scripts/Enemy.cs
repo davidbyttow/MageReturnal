@@ -7,6 +7,8 @@ public class Enemy : Entity {
 
 	void Awake() {
 		character = GetComponent<Character>();
+		var material = GetComponent<Renderer>().material;
+		material.SetFloat("_HitEffectBlend", 0.1f);
 	}
 
 	void Update() {

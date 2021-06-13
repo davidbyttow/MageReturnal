@@ -26,7 +26,7 @@ public class DasherAI : MonoBehaviour {
 			dashTimer -= Time.deltaTime;
 			if (dashTimer <= 0) {
 				if (dashing) {
-					character.velocity = Vector2.zero;
+					character.rigidBody.velocity = Vector2.zero;
 					dashTimer = waitTime;
 					dashing = false;
 				} else {
@@ -36,7 +36,7 @@ public class DasherAI : MonoBehaviour {
 					var dir = toTarget.normalized;
 					var dist = Mathf.Min(toTarget.magnitude, maxTravelDistance);
 					dashTimer = dist / speed;
-					character.velocity = dir * speed;
+					character.rigidBody.velocity = dir * speed;
 					dashing = true;
 				}
 			}

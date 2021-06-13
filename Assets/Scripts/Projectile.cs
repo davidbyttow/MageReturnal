@@ -19,13 +19,11 @@ public class Projectile : Entity {
 		rigidBody = GetComponent<Rigidbody2D>();
 	}
 
-	void FixedUpdate() {
+	void Update() {
 		rigidBody.velocity = velocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D target) {
-		Debug.Log("collision enter");
-
 		var hit = new ProjectileHit();
 		hit.projectile = this;
 		hit.collision = target;
@@ -33,6 +31,10 @@ public class Projectile : Entity {
 		var entity = target.collider.GetComponent<Entity>();
 		if (entity) {
 			entity.OnProjectileHit(hit);
+
+			if (hit.collision.rigidbody != null) {
+				hit.collision.rigidbody.AddForce(transform.DirectionTo(hit.collision.collider.transform) * 100);
+			}
 		}
 
 		if (!hit.ignoreCollision) {
