@@ -23,13 +23,14 @@ public class Character : Entity {
 	private void LateUpdate() {
 	}
 
-	public void FireProjectile(Projectile projectile, Vector2 dir) {
+	public Projectile FireProjectile(Projectile projectile, Vector2 dir) {
 		Projectile proj = Instantiate(projectile, transform.position, Quaternion.identity);
 		Physics2D.IgnoreCollision(GetComponent<Collider2D>(), proj.GetComponent<Collider2D>());
 		proj.rigidBody.velocity = dir * 10;
 		if (currentRoom) {
 			currentRoom.AddToRoom(proj);
 		}
+		return proj;
 	}
 
 	private void TakeDamage(int amount) {

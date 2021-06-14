@@ -13,11 +13,11 @@ public class Projectile : Entity {
 
 	internal Rigidbody2D rigidBody;
 
-	private SpriteRenderer renderer;
+	private SpriteRenderer spriteRenderer;
 
 	void Awake() {
 		rigidBody = GetComponent<Rigidbody2D>();
-		renderer = GetComponent<SpriteRenderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	void Update() {
@@ -46,7 +46,7 @@ public class Projectile : Entity {
 		GetComponent<Collider2D>().isTrigger = true;
 		rigidBody.velocity = Vector2.zero;
 		rigidBody.isKinematic = true;
-		renderer.forceRenderingOff = true;
+		spriteRenderer.forceRenderingOff = true;
 
 		var systems = GetComponentsInChildren<ParticleSystem>();
 		foreach (var ps in systems) {

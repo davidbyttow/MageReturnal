@@ -66,13 +66,4 @@ public class FlyerAI : MonoBehaviour {
 			return BehaviorNodeStatus.Running;
 		}
 	}
-
-	private readonly ActionDelegate<FlyerAI> attack = (ctx) => {
-		ctx.data.stateElapsed += Time.deltaTime;
-		if (ctx.data.stateElapsed < 2) {
-			return BehaviorNodeStatus.Running;
-		}
-		return BehaviorNodeStatus.Success;
-	};
 }
-
