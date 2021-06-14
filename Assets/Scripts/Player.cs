@@ -15,6 +15,9 @@ public class Player : MonoBehaviour {
 	private Vector2 fireDirection = Vector2.zero;
 	private float lastFireTime;
 	private float movementSpeed = 0;
+	private Vector2 dashDirection = Vector2.zero;
+
+	private bool isDashing { get { return dashDirection != Vector2.zero;  } }
 
 	private Vector2 aimDirection {
 		get {
@@ -46,16 +49,22 @@ public class Player : MonoBehaviour {
 	}
 
 	void ProcessInput() {
-		var moveX = Input.GetAxisRaw("Horizontal");
-		var moveY = Input.GetAxisRaw("Vertical");
-		movementDirection = new Vector2(moveX, moveY);
-		movementSpeed = Mathf.Clamp(movementDirection.magnitude, 0f, 1f);
-		movementDirection.Normalize();
+		if (!isDashing) {
+			var moveX = Input.GetAxisRaw("Horizontal");
+			var moveY = Input.GetAxisRaw("Vertical");
+			movementDirection = new Vector2(moveX, moveY);
+			movementSpeed = Mathf.Clamp(movementDirection.magnitude, 0f, 1f);
+			movementDirection.Normalize();
+		}
 
-		if (Input.GetButtonDown("Fire1")) {
+		if (!isDashing && Input.GetButtonDown("Fire1")) {
 			fireDirection = aimDirection;
 			lastFireTime = Time.realtimeSinceStartup;
 			character.FireProjectile(projectilePrefab, aimDirection);
+		}
+
+		if (Input.GetButtonDown("Jump")) {
+			Dash();
 		}
 
 		if (Time.realtimeSinceStartup - lastFireTime > 1f) {
@@ -66,7 +75,14 @@ public class Player : MonoBehaviour {
 
 	void UpdateMovement() {
 		var vars = Environment.inst.variables;
-		var targetVelocity = movementDirection * vars.playerSpeed;
+
+		Vector2 targetVelocity;
+		if (isDashing) {
+			targetVelocity = dashDirection * vars.playerSpeed * 3;
+		} else {
+			targetVelocity = movementDirection * vars.playerSpeed;
+		}
+
 		var diff = rigidBody.velocity.Delta(targetVelocity, vars.playerSpeed);
 		rigidBody.velocity += diff;
 	}
@@ -80,5 +96,17 @@ public class Player : MonoBehaviour {
 			animator.SetFloat("Vertical", movementDirection.y);
 		}
 		animator.SetFloat("Speed", character.rigidBody.velocity.sqrMagnitude);
+	}
+
+	void Dash() {
+		StartCoroutine(DashAsync());
+	}
+
+	IEnumerator DashAsync() {
+		dashDirection = aimDirection;
+
+		yield return new WaitForSeconds(0.2f);
+
+		dashDirection = Vector2.zero;
 	}
 }
