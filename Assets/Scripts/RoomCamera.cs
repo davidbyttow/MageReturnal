@@ -6,7 +6,7 @@ public class RoomCamera : MonoBehaviour {
 	public static RoomCamera inst;
 
 	private Room currentRoom;
-	public float roomChangeSpeed = 500;
+	public float roomChangeSpeed = 100;
 
 	private void Awake() {
 		inst = this;

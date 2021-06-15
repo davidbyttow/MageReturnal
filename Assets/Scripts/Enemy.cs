@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : Entity {
+public class Enemy : MonoBehaviour {
 
 	public Character character { get; private set; }
 
@@ -13,8 +13,5 @@ public class Enemy : Entity {
 
 	void Update() {
 
-	}
-
-	public override void OnProjectileHit(ProjectileHit hit) {
 	}
 }

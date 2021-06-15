@@ -1870,7 +1870,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 841874697
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -4375,7 +4375,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 841874697
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -4445,17 +4445,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5579866481645204044}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a0c86aae7853d6438ccbee12b145967, type: 3}
+  m_Script: {fileID: 11500000, guid: c70e49ab4662cbe46bc7dc8d2fdf66f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 14
-  height: 11
+  width: 13
+  height: 10
   doors:
-  - {fileID: 6422443481560607698}
   - {fileID: 7074862762737233478}
+  - {fileID: 6422443481560607698}
   - {fileID: 2191291481829627478}
   - {fileID: 2405572144490385718}
   entityRoot: {fileID: 4969794717007678804}
+  type: 2
 --- !u!1001 &353991629812831717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4530,7 +4531,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db29b0cbc5f06944b2f269ab6c84694, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c94ac0f19483854c8ab6b0c7866a943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4315268008148947589
@@ -4607,7 +4608,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db29b0cbc5f06944b2f269ab6c84694, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c94ac0f19483854c8ab6b0c7866a943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5162559687917267605
@@ -4684,7 +4685,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db29b0cbc5f06944b2f269ab6c84694, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c94ac0f19483854c8ab6b0c7866a943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8983261565397069569
@@ -4761,6 +4762,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db29b0cbc5f06944b2f269ab6c84694, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c94ac0f19483854c8ab6b0c7866a943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

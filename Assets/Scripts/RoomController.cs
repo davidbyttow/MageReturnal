@@ -91,7 +91,6 @@ public class RoomController : MonoBehaviour {
 			if (room.type == RoomType.Normal) {
 				var templates = room.GetComponentsInChildren<RoomTemplate>(true).ToArray();
 				if (templates.Length > 0) {
-					Debug.Log("Applying configuration");
 					room.ApplyConfiguration(templates[0]);
 				}
 			}

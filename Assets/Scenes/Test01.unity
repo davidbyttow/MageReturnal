@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20375085}
   - component: {fileID: 20375084}
+  - component: {fileID: 20375086}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -149,15 +150,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 20375083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11a99b4efd93efc44b4f4c877a6c6792, type: 3}
+  m_Script: {fileID: 11500000, guid: 19a9c6e2203064c41be46a812e131eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: 6
+  gridSize: 9
   roomPadding: 2
-  enemyPrefabs:
-  - {fileID: 5780047683817350153, guid: 82bae769abeeab34bac0e2f6ec13330b, type: 3}
-  pickupPrefabs:
-  - {fileID: 5222810760886053509, guid: 8d7d7843ab750c04aae912e978dff114, type: 3}
+  enemyPrefabs: []
+  pickupPrefabs: []
   roomPrefab: {fileID: 4969612191609012215, guid: c4adcf175d7eecf49bea74d8d07a916b, type: 3}
   bossRoomPrefab: {fileID: 918242430431969953, guid: 0433c0911928014438c8b9d8000e425f, type: 3}
 --- !u!4 &20375085
@@ -174,6 +173,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &20375086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20375083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774b7a69082a15344a875df6a160efd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variables: {fileID: 11400000, guid: cfc465b081d7bcc4eb41c0c7844e8005, type: 2}
 --- !u!1 &134300258
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +416,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 506241071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cc2f8688d17a47448dda3047bf2230e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b372fff071fbd34585fe9dca845e2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roomChangeSpeed: 100

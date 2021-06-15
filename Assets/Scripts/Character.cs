@@ -42,6 +42,6 @@ public class Character : Entity {
 	}
 
 	public override void OnProjectileHit(ProjectileHit hit) {
-		//TakeDamage(hit.projectile.damage);
+		TakeDamage(hit.projectile.damage);
 	}
 }

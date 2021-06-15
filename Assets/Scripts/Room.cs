@@ -48,6 +48,9 @@ public class Room : MonoBehaviour {
 	internal Vector2Int pos;
 	internal RoomController controller;
 
+	private bool locked;
+	private bool active;
+
 	void Awake() {
 		foreach (var door in doors) {
 			door.room = this;
@@ -56,6 +59,13 @@ public class Room : MonoBehaviour {
 		var templates = GetComponentsInChildren<RoomTemplate>(true);
 		foreach (var tpl in templates) {
 			tpl.gameObject.SetActive(false);
+		}
+		active = false;
+	}
+
+	void Update() {
+		if (active && locked && !ShouldLock()) {
+			UnlockDoors();
 		}
 	}
 
@@ -70,11 +80,46 @@ public class Room : MonoBehaviour {
 		dstDoor.gameObject.SetActive(true);
 	}
 
+	bool ShouldLock() {
+		foreach (var entity in GetEntitiesInRoom()) {
+			if (entity.GetComponent<Enemy>()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void ActivateRoom() {
+		active = true;
+
+		// TODO: Figure out how to do this properly
 		entityRoot.SetActiveRecursively(true);
+
+		if (ShouldLock()) {
+			LockDoors();
+		}
+	}
+
+	void LockDoors() {
+		locked = true;
+		foreach (var door in doors) {
+			if (door.isActiveAndEnabled) {
+				door.Lock();
+			}
+		}
+	}
+
+	void UnlockDoors() {
+		locked = false;
+		foreach (var door in doors) {
+			if (door.isActiveAndEnabled) {
+				door.Unlock();
+			}
+		}
 	}
 
 	public void DeactivateRoom() {
+		active = false;
 		entityRoot.SetActive(false);
 	}
 
