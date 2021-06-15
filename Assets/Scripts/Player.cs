@@ -103,7 +103,11 @@ public class Player : MonoBehaviour {
 	}
 
 	IEnumerator DashAsync() {
-		dashDirection = aimDirection;
+		if (movementDirection.sqrMagnitude > 0) {
+			dashDirection = movementDirection;
+		} else {
+			dashDirection = aimDirection;
+		}
 
 		yield return new WaitForSeconds(0.2f);
 
