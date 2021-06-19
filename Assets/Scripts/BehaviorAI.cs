@@ -56,7 +56,7 @@ public class ActionNode<T> : BehaviorNode<T> {
 
 	public override BehaviorNodeStatus Update(BehaviorContext<T> ctx) {
 		return fn(ctx);
-	} 
+	}
 }
 
 public delegate BehaviorNodeStatus DecoratorDelegate<T>(BehaviorNodeStatus status, BehaviorContext<T> ctx);
